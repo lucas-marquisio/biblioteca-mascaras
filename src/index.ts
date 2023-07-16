@@ -67,3 +67,14 @@ export const maskCurrency = (input: string | number): string => {
   return formattedValue
 }
 
+export const maskCpf = (input: string | number): string => {
+  let numericValue: string = String(input).replace(/\D/g, '').slice(0, 11)
+  const cpfRegex: RegExp = /^(\d{3})(\d{1,3})?(\d{1,3})?(\d{1,2})?$/
+
+  const formattedValue: string = numericValue.replace(cpfRegex, (_, p1, p2, p3, p4) =>
+    `${p1}${p2 ? `.${p2}` : ''}${p3 ? `.${p3}` : ''}${p4 ? `-${p4}` : ''}`
+  )
+
+  return formattedValue
+}
+
