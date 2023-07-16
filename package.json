@@ -1,7 +1,7 @@
 {
-  "name": "lib-masks",
+  "name": "biblioteca-mascaras",
   "version": "1.0.1",
-  "description": "lib masks",
+  "description": "biblioteca de mascaras para javascript/typescript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
