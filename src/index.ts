@@ -52,8 +52,12 @@ export const maskDate = (input: string): string => {
 }
 
 export const maskCurrency = (input: string | number): string => {
-   const inputString: string = typeof input === 'string' ? input.replace(/[^\d.,]/g, '') : input.toString()
+  const inputString: string = typeof input === 'string' ? input.replace(/[^\d.,]/g, '') : input.toString()
   const numericValue: number = parseFloat(inputString.replace(',', '.'))
+
+  if (typeof input === 'string' && input.trim() === '') {
+    return 'R$ 00,00'
+  }
 
   const formattedValue: string = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
