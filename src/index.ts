@@ -1,4 +1,8 @@
-export const maskNumber = (input: number): string => {
+export const maskNumber = (input: number | string): string => {
+  if (typeof input === 'number') {
+    input = input.toString()
+  }
+
   const suffixes: { [divisor: number]: string } = {
     1: '',
     1000: 'k',
@@ -9,11 +13,11 @@ export const maskNumber = (input: number): string => {
 
   const divisorKeys = Object.keys(suffixes)
     .map(key => parseInt(key))
-    .sort((a, b) => b - a) 
+    .sort((a, b) => b - a)
 
   for (let divisor of divisorKeys) {
-    if (input >= divisor) {
-      const quotient = input / divisor
+    if (parseFloat(input) >= divisor) {
+      const quotient = parseFloat(input) / divisor
       let result = quotient.toString()
       if (result.includes('.')) {
         result = result.replace(/(\.[0-9]*[1-9])0+$/, '$1')
@@ -22,10 +26,14 @@ export const maskNumber = (input: number): string => {
     }
   }
 
-  return input.toString()
+  return input
 }
 
-export const maskDate = (input: string): string => {
+
+export const maskDate = (input: string | number): string => {
+  if (typeof input === 'number') {
+    input = input.toString()
+  }
   const dateMaskRegex: RegExp = /^(\d{0,2})(\d{0,2})(\d{0,4})$/
 
   const hasSlashes: boolean = input.includes('/')
