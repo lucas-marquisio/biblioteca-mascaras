@@ -1,4 +1,4 @@
-export const parseNumber = (number: number): string => {
+export const maskNumber = (number: number): string => {
   const suffixes: { [divisor: number]: string } = {
     1: '',
     1000: 'k',
