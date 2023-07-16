@@ -30,6 +30,9 @@ __export(src_exports, {
 });
 module.exports = __toCommonJS(src_exports);
 var maskNumber = (input) => {
+  if (typeof input === "number") {
+    input = input.toString();
+  }
   const suffixes = {
     1: "",
     1e3: "k",
@@ -39,8 +42,8 @@ var maskNumber = (input) => {
   };
   const divisorKeys = Object.keys(suffixes).map((key) => parseInt(key)).sort((a, b) => b - a);
   for (let divisor of divisorKeys) {
-    if (input >= divisor) {
-      const quotient = input / divisor;
+    if (parseFloat(input) >= divisor) {
+      const quotient = parseFloat(input) / divisor;
       let result = quotient.toString();
       if (result.includes(".")) {
         result = result.replace(/(\.[0-9]*[1-9])0+$/, "$1");
@@ -48,9 +51,12 @@ var maskNumber = (input) => {
       return result + suffixes[divisor];
     }
   }
-  return input.toString();
+  return input;
 };
 var maskDate = (input) => {
+  if (typeof input === "number") {
+    input = input.toString();
+  }
   const dateMaskRegex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/;
   const hasSlashes = input.includes("/");
   if (hasSlashes) {

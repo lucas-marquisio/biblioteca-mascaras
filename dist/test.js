@@ -2,6 +2,9 @@
 
 // src/index.ts
 var maskNumber = (input) => {
+  if (typeof input === "number") {
+    input = input.toString();
+  }
   const suffixes = {
     1: "",
     1e3: "k",
@@ -11,8 +14,8 @@ var maskNumber = (input) => {
   };
   const divisorKeys = Object.keys(suffixes).map((key) => parseInt(key)).sort((a, b) => b - a);
   for (let divisor of divisorKeys) {
-    if (input >= divisor) {
-      const quotient = input / divisor;
+    if (parseFloat(input) >= divisor) {
+      const quotient = parseFloat(input) / divisor;
       let result = quotient.toString();
       if (result.includes(".")) {
         result = result.replace(/(\.[0-9]*[1-9])0+$/, "$1");
@@ -20,9 +23,12 @@ var maskNumber = (input) => {
       return result + suffixes[divisor];
     }
   }
-  return input.toString();
+  return input;
 };
 var maskDate = (input) => {
+  if (typeof input === "number") {
+    input = input.toString();
+  }
   const dateMaskRegex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/;
   const hasSlashes = input.includes("/");
   if (hasSlashes) {
@@ -115,9 +121,9 @@ var maskCep = (cep) => {
 };
 
 // src/test.ts
-console.log(`valor numerico: 12344, saida: ${maskNumber(12344)}`);
+console.log(`valor numerico: 12344, saida: ${maskNumber("123333333")}`);
 console.log(`valor data: 31012023, saida: ${maskDate("31012023")}`);
-console.log(`valor monetario: 33, saida: ${maskCurrency("33")}`);
+console.log(`valor monetario: 33, saida: ${maskCurrency("333")}`);
 console.log(`valor cpf: 00000000000, saida: ${maskCpf("00000000000")}`);
 console.log(`valor cnpj: 000000000000000, saida: ${maskCnpj("000000000000000")}`);
 console.log(`valor celular: 5599999999999, saida: ${maskPhone("55123456789")}`);

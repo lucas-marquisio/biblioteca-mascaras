@@ -1,5 +1,5 @@
-declare const maskNumber: (input: number) => string;
-declare const maskDate: (input: string) => string;
+declare const maskNumber: (input: number | string) => string;
+declare const maskDate: (input: string | number) => string;
 declare const maskCurrency: (input: string | number) => string;
 declare const maskCpf: (input: string | number) => string;
 declare const maskCnpj: (input: string | number) => string;
