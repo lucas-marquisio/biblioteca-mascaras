@@ -7,7 +7,7 @@ Uma biblioteca TypeScript que fornece máscaras de formatação para diversos fo
 Instale a biblioteca utilizando o npm:
 
 ```bash
-npm install lib-masks
+npm install biblioteca-mascaras
 ```
 
 ## Mascaras 
@@ -20,23 +20,23 @@ npm install lib-masks
 - numero
 
 ~~~
-import { maskCep } from'lib-masks'
+import { maskCep } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskCnpj } from'lib-masks'
+import { maskCnpj } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskCpf } from'lib-masks'
+import { maskCpf } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskCurrency } from'lib-masks'
+import { maskCurrency } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskDate } from'lib-masks'
+import { maskDate } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskNumber } from'lib-masks'
+import { maskNumber } from'biblioteca-mascaras'
 ~~~
 ~~~
-import { maskPhone } from'lib-masks'
+import { maskPhone } from'biblioteca-mascaras'
 ~~~
