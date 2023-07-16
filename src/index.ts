@@ -130,3 +130,17 @@ export const maskPhone = (input: string | number): string => {
 
   return formattedValue
 }
+
+export const maskCep = (cep: number | string) => {
+  let cepString = String(cep).replace(/\D/g, '')
+
+  if (cepString.length > 8) {
+    cepString = cepString.slice(0, 8)
+  }
+
+  if (cepString.length > 5) {
+    cepString = cepString.slice(0, 5) + '-' + cepString.slice(5)
+  }
+
+  return cepString
+}
