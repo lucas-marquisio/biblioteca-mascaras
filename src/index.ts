@@ -78,3 +78,33 @@ export const maskCpf = (input: string | number): string => {
   return formattedValue
 }
 
+export const maskCnpj = (input: string | number): string => {
+  let numericValue: string = String(input).replace(/\D/g, '').slice(0, 14)
+
+  if (numericValue.length < 2 ) {
+    return numericValue
+  }
+
+  let formattedValue: string = numericValue.slice(0, 2)
+
+  if (numericValue.length  < 5 && numericValue.length > 2) {
+    formattedValue += `.${numericValue.slice(2, 5)}`
+  }
+  if (numericValue.length >= 5) {
+    formattedValue += `.${numericValue.slice(2, 5)}`
+  }
+
+  if (numericValue.length >= 8) {
+    formattedValue += `.${numericValue.slice(5, 8)}`
+  }
+
+  if (numericValue.length >= 12) {
+    formattedValue += `/${numericValue.slice(8, 12)}`
+  }
+
+  if (numericValue.length === 14) {
+    formattedValue += `-${numericValue.slice(12)}`
+  }
+
+  return formattedValue
+}
