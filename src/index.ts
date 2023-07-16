@@ -24,3 +24,29 @@ export const maskNumber = (number: number): string => {
 
   return number.toString()
 }
+
+export const maskDate = (input: string): string => {
+  const dateMaskRegex: RegExp = /^(\d{0,2})(\d{0,2})(\d{0,4})$/
+
+  const hasSlashes: boolean = input.includes('/')
+
+  if (hasSlashes) {
+    input = input.replace(/\//g, '')
+  }
+
+  const maskedInput = input.replace(dateMaskRegex, (match: string, p1: string, p2: string, p3: string) => {
+    let maskedValue = ''
+    if (p1) {
+      maskedValue += p1
+      if (p2) {
+        maskedValue += `/${p2}`
+        if (p3) {
+          maskedValue += `/${p3}`
+        }
+      }
+    }
+    return maskedValue
+  })
+
+  return maskedInput
+}
