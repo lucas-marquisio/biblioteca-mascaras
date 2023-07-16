@@ -50,3 +50,16 @@ export const maskDate = (input: string): string => {
 
   return maskedInput
 }
+
+export const maskCurrency = (input: string | number): string => {
+   const inputString: string = typeof input === 'string' ? input.replace(/[^\d.,]/g, '') : input.toString()
+  const numericValue: number = parseFloat(inputString.replace(',', '.'))
+
+  const formattedValue: string = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(numericValue)
+
+  return formattedValue
+}
+
