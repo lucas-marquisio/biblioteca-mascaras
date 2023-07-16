@@ -108,3 +108,25 @@ export const maskCnpj = (input: string | number): string => {
 
   return formattedValue
 }
+
+export const maskPhone = (input: string | number): string => {
+  let numericValue: string = String(input).replace(/\D/g, '').slice(0, 11)
+
+  if (numericValue.length < 2) {
+    return numericValue
+  }
+
+  let formattedValue: string = `(${numericValue.slice(0, 2)})`
+
+  if (numericValue.length >= 3) {
+    formattedValue += ` ${numericValue.slice(2)}`
+  }
+
+  if (numericValue.length === 11) {
+    formattedValue = `${formattedValue.slice(0, 10)}-${formattedValue.slice(10)}`
+  } else if (numericValue.length > 6) {
+    formattedValue = `${formattedValue.slice(0,9)}-${formattedValue.slice(9)}`
+  }
+
+  return formattedValue
+}
