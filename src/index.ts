@@ -37,6 +37,9 @@ export const Cpf = (value: string): string => {
 export const Money = (value: string) => {
   const valueParse = value.toString();
 
+  if (valueParse.length == 0)
+    return `R$ 0,00`
+
   if (valueParse.length == 1)
     return `R$ 0,0${/[^\d,]/g.test(valueParse) ? 0 : valueParse}`;
 
