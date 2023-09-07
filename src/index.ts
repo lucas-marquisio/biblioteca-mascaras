@@ -195,7 +195,7 @@ export const CreditCardNumber = (data: string) => {
 
     return creditCardParsed
   }
-export const maskCreditCardCvv = (data: string) => {
+export const CreditCardCvv = (data: string) => {
     const creditCardCvvParsed = data.replace(/[^\d,]|,/g, "")
 
     if (creditCardCvvParsed.length > 2) {
@@ -221,9 +221,9 @@ export default {
   Cep,
   Phone,
   CNPJ,
-  Number,
+  Numbers,
   CpfCNPJ,
   RG,
   CreditCardNumber,
-  maskCreditCardCvv
+  CreditCardCvv
 }

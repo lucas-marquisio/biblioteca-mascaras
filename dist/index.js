@@ -24,13 +24,13 @@ __export(src_exports, {
   Cep: () => Cep,
   Cpf: () => Cpf,
   CpfCNPJ: () => CpfCNPJ,
+  CreditCardCvv: () => CreditCardCvv,
   CreditCardNumber: () => CreditCardNumber,
   Money: () => Money,
   Numbers: () => Numbers,
   Phone: () => Phone,
   RG: () => RG,
-  default: () => src_default,
-  maskCreditCardCvv: () => maskCreditCardCvv
+  default: () => src_default
 });
 module.exports = __toCommonJS(src_exports);
 var Cpf = (value) => {
@@ -202,7 +202,7 @@ var CreditCardNumber = (data) => {
   }
   return creditCardParsed;
 };
-var maskCreditCardCvv = (data) => {
+var CreditCardCvv = (data) => {
   const creditCardCvvParsed = data.replace(/[^\d,]|,/g, "");
   if (creditCardCvvParsed.length > 2) {
     const creditCardCvvListNumbers = creditCardCvvParsed.split("");
@@ -224,11 +224,11 @@ var src_default = {
   Cep,
   Phone,
   CNPJ,
-  Number,
+  Numbers,
   CpfCNPJ,
   RG,
   CreditCardNumber,
-  maskCreditCardCvv
+  CreditCardCvv
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
@@ -236,10 +236,10 @@ var src_default = {
   Cep,
   Cpf,
   CpfCNPJ,
+  CreditCardCvv,
   CreditCardNumber,
   Money,
   Numbers,
   Phone,
-  RG,
-  maskCreditCardCvv
+  RG
 });
