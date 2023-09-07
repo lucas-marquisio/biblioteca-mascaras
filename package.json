@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn src/test.ts",
-    "build": "tsup src/**/*",
+    "build": "tsup src/*",
     "publish": "npm version patch && npm publish"
   },
   "keywords": [],

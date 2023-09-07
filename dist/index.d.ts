@@ -1,9 +1,24 @@
-declare const maskNumber: (input: number | string) => string;
-declare const maskDate: (input: string | number) => string;
-declare const maskCurrency: (input: string | number) => string;
-declare const maskCpf: (input: string | number) => string;
-declare const maskCnpj: (input: string | number) => string;
-declare const maskPhone: (input: string | number) => string;
-declare const maskCep: (cep: number | string) => string;
+declare const Cpf: (value: string) => string;
+declare const Money: (value: string) => string;
+declare const Cep: (data: string) => string;
+declare const Phone: (data: string) => string;
+declare const CNPJ: (data: string) => string;
+declare const Numbers: (data: string) => string;
+declare const CpfCNPJ: (data: string) => string;
+declare const RG: (data: string) => string;
+declare const CreditCardNumber: (data: string) => string;
+declare const maskCreditCardCvv: (data: string) => string;
+declare const _default: {
+    Cpf: (value: string) => string;
+    Money: (value: string) => string;
+    Cep: (data: string) => string;
+    Phone: (data: string) => string;
+    CNPJ: (data: string) => string;
+    Number: NumberConstructor;
+    CpfCNPJ: (data: string) => string;
+    RG: (data: string) => string;
+    CreditCardNumber: (data: string) => string;
+    maskCreditCardCvv: (data: string) => string;
+};
 
-export { maskCep, maskCnpj, maskCpf, maskCurrency, maskDate, maskNumber, maskPhone };
+export { CNPJ, Cep, Cpf, CpfCNPJ, CreditCardNumber, Money, Numbers, Phone, RG, _default as default, maskCreditCardCvv };

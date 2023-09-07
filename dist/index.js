@@ -20,140 +20,226 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  maskCep: () => maskCep,
-  maskCnpj: () => maskCnpj,
-  maskCpf: () => maskCpf,
-  maskCurrency: () => maskCurrency,
-  maskDate: () => maskDate,
-  maskNumber: () => maskNumber,
-  maskPhone: () => maskPhone
+  CNPJ: () => CNPJ,
+  Cep: () => Cep,
+  Cpf: () => Cpf,
+  CpfCNPJ: () => CpfCNPJ,
+  CreditCardNumber: () => CreditCardNumber,
+  Money: () => Money,
+  Numbers: () => Numbers,
+  Phone: () => Phone,
+  RG: () => RG,
+  default: () => src_default,
+  maskCreditCardCvv: () => maskCreditCardCvv
 });
 module.exports = __toCommonJS(src_exports);
-var maskNumber = (input) => {
-  if (typeof input === "number") {
-    input = input.toString();
+var Cpf = (value) => {
+  const Numbers2 = value.replace(/[^0-9]/g, "").split("");
+  const totalNumbers = Numbers2.length + 1;
+  let numbersList = Numbers2;
+  if (totalNumbers > 11) {
+    numbersList = [];
+    Numbers2.map((e, index) => {
+      if (index < 11) {
+        numbersList.push(e);
+      }
+    });
   }
-  const suffixes = {
-    1: "",
-    1e3: "k",
-    1e6: "m",
-    1e9: "b",
-    1e12: "t"
+  let cpf = value;
+  if (totalNumbers > 3) {
+    cpf = "";
+    numbersList.map((n, index) => {
+      const position = index + 1;
+      if (position == 4 || position == 7) {
+        cpf = cpf + `.${n}`;
+        return;
+      }
+      if (position == 10) {
+        cpf = cpf + `-${n}`;
+        return;
+      }
+      cpf = cpf + n;
+    });
+  }
+  return cpf;
+};
+var Money = (value) => {
+  const valueParse = value.toString();
+  if (valueParse.length == 1)
+    return `R$ 0,0${/[^\d,]/g.test(valueParse) ? 0 : valueParse}`;
+  const removeCharacters = value.replace(/[^\d,]/g, "");
+  const [money, cents] = removeCharacters.split(",");
+  const moneyUpdated = {
+    money: money || "0",
+    cents: cents || "00"
   };
-  const divisorKeys = Object.keys(suffixes).map((key) => parseInt(key)).sort((a, b) => b - a);
-  for (let divisor of divisorKeys) {
-    if (parseFloat(input) >= divisor) {
-      const quotient = parseFloat(input) / divisor;
-      let result = quotient.toString();
-      if (result.includes(".")) {
-        result = result.replace(/(\.[0-9]*[1-9])0+$/, "$1");
+  if (cents.length == 3) {
+    moneyUpdated.money = money == "0" ? cents[0] : `${money}${cents[0]}`;
+    moneyUpdated.cents = cents.slice(1);
+  } else if (cents.length == 1 && money != "0") {
+    const valueToSetCent = money[money.length - 1];
+    moneyUpdated.cents = `${valueToSetCent}${cents}`;
+    moneyUpdated.money = money.slice(0, money.length - 1) == "" ? "0" : money.slice(0, money.length - 1);
+  } else if (money.length < 2 && cents.length > 2 && cents.length < 4) {
+    moneyUpdated.cents = cents.slice(1);
+    moneyUpdated.money = money;
+  }
+  return `R$ ${parseInt(moneyUpdated.money).toLocaleString("pt-BR")},${moneyUpdated.cents == "0" ? "00" : moneyUpdated.cents}`;
+};
+var Cep = (data) => {
+  const dataOnlyNumbers = data.replace(/[^\d,]|,/g, "");
+  let cepParse = "";
+  if (dataOnlyNumbers.length > 5) {
+    dataOnlyNumbers.split("").forEach((d, index) => {
+      if (index > 7)
+        return;
+      if (index == 5) {
+        cepParse = `${cepParse}-${d}`;
+        return;
       }
-      return result + suffixes[divisor];
-    }
+      cepParse = `${cepParse}${d}`;
+    });
+    return cepParse;
   }
-  return input;
+  return dataOnlyNumbers;
 };
-var maskDate = (input) => {
-  if (typeof input === "number") {
-    input = input.toString();
+var Phone = (data) => {
+  const phoneNumber = data.replace(/[^\d,]|,/g, "");
+  if (phoneNumber.length > 2) {
+    let phoneMask = "";
+    const phoneNumberArray = phoneNumber.split("");
+    phoneNumberArray.forEach((p, index) => {
+      if (index == 0)
+        return phoneMask = `(${p}`;
+      if (index == 1)
+        return phoneMask = `${phoneMask}${p})`;
+      if (index == 2)
+        return phoneMask = `${phoneMask} ${p}`;
+      if (index == 3)
+        return phoneMask = `${phoneMask} ${p}`;
+      if (index == 7)
+        return phoneMask = `${phoneMask}-${p}`;
+      if (index == 10)
+        return phoneMask = `${phoneMask}${p}`;
+      if (index > 10)
+        return;
+      phoneMask = `${phoneMask}${p}`;
+    });
+    return phoneMask;
   }
-  const dateMaskRegex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/;
-  const hasSlashes = input.includes("/");
-  if (hasSlashes) {
-    input = input.replace(/\//g, "");
-  }
-  const maskedInput = input.replace(dateMaskRegex, (match, p1, p2, p3) => {
-    let maskedValue = "";
-    if (p1) {
-      maskedValue += p1;
-      if (p2) {
-        maskedValue += `/${p2}`;
-        if (p3) {
-          maskedValue += `/${p3}`;
-        }
-      }
-    }
-    return maskedValue;
-  });
-  return maskedInput;
+  return phoneNumber;
 };
-var maskCurrency = (input) => {
-  const inputString = typeof input === "string" ? input.replace(/[^\d.,]/g, "") : input.toString();
-  const numericValue = parseFloat(inputString.replace(",", "."));
-  if (typeof input === "string" && input.trim() === "") {
-    return "R$ 00,00";
+var CNPJ = (data) => {
+  const cnpjNumber = data.replace(/[^\d,]|,/g, "");
+  if (cnpjNumber.length > 2) {
+    const cnpjNumberArray = cnpjNumber.split("");
+    let maskCNPJ = "";
+    cnpjNumberArray.forEach((c, index) => {
+      if (index == 2)
+        return maskCNPJ = `${maskCNPJ}.${c}`;
+      if (index == 5)
+        return maskCNPJ = `${maskCNPJ}.${c}`;
+      if (index == 8)
+        return maskCNPJ = `${maskCNPJ}/${c}`;
+      if (index == 12)
+        return maskCNPJ = `${maskCNPJ}-${c}`;
+      if (index >= 14)
+        return;
+      return maskCNPJ = `${maskCNPJ}${c}`;
+    });
+    return maskCNPJ;
   }
-  const formattedValue = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(numericValue);
-  return formattedValue;
+  return cnpjNumber;
 };
-var maskCpf = (input) => {
-  let numericValue = String(input).replace(/\D/g, "").slice(0, 11);
-  const cpfRegex = /^(\d{3})(\d{1,3})?(\d{1,3})?(\d{1,2})?$/;
-  const formattedValue = numericValue.replace(
-    cpfRegex,
-    (_, p1, p2, p3, p4) => `${p1}${p2 ? `.${p2}` : ""}${p3 ? `.${p3}` : ""}${p4 ? `-${p4}` : ""}`
-  );
-  return formattedValue;
+var Numbers = (data) => {
+  const number = data.replace(/[^\d,]|,/g, "");
+  const numberMasked = parseInt(number).toLocaleString();
+  return isNaN(parseInt(numberMasked)) ? "0" : numberMasked;
 };
-var maskCnpj = (input) => {
-  let numericValue = String(input).replace(/\D/g, "").slice(0, 14);
-  if (numericValue.length < 2) {
-    return numericValue;
-  }
-  let formattedValue = numericValue.slice(0, 2);
-  if (numericValue.length < 5 && numericValue.length > 2) {
-    formattedValue += `.${numericValue.slice(2, 5)}`;
-  }
-  if (numericValue.length >= 5) {
-    formattedValue += `.${numericValue.slice(2, 5)}`;
-  }
-  if (numericValue.length >= 8) {
-    formattedValue += `.${numericValue.slice(5, 8)}`;
-  }
-  if (numericValue.length >= 12) {
-    formattedValue += `/${numericValue.slice(8, 12)}`;
-  }
-  if (numericValue.length === 14) {
-    formattedValue += `-${numericValue.slice(12)}`;
-  }
-  return formattedValue;
+var CpfCNPJ = (data) => {
+  const dataParse = data.replace(/[^\d,]|,/g, "");
+  if (dataParse.length < 12)
+    return Cpf(dataParse);
+  return CNPJ(dataParse);
 };
-var maskPhone = (input) => {
-  let numericValue = String(input).replace(/\D/g, "").slice(0, 11);
-  if (numericValue.length < 2) {
-    return numericValue;
+var RG = (data) => {
+  const rgParse = data.replace(/[^\d,]|,/g, "");
+  if (rgParse.length > 2) {
+    const rgNumberList = rgParse.split("");
+    let rgMasked = "";
+    rgNumberList.forEach((r, index) => {
+      if (index == 2)
+        return rgMasked = `${rgMasked}.${r}`;
+      if (index == 5)
+        return rgMasked = `${rgMasked}.${r}`;
+      if (index == 8)
+        return rgMasked = `${rgMasked}-${r}`;
+      if (index > 9)
+        return;
+      return rgMasked = `${rgMasked}${r}`;
+    });
+    return rgMasked;
   }
-  let formattedValue = `(${numericValue.slice(0, 2)})`;
-  if (numericValue.length >= 3) {
-    formattedValue += ` ${numericValue.slice(2)}`;
-  }
-  if (numericValue.length === 11) {
-    formattedValue = `${formattedValue.slice(0, 10)}-${formattedValue.slice(10)}`;
-  } else if (numericValue.length > 6) {
-    formattedValue = `${formattedValue.slice(0, 9)}-${formattedValue.slice(9)}`;
-  }
-  return formattedValue;
+  return rgParse;
 };
-var maskCep = (cep) => {
-  let cepString = String(cep).replace(/\D/g, "");
-  if (cepString.length > 8) {
-    cepString = cepString.slice(0, 8);
+var CreditCardNumber = (data) => {
+  const creditCardParsed = data.replace(/[^\d,]|,/g, "");
+  if (creditCardParsed.length > 4) {
+    const creditCardListNumbers = creditCardParsed.split("");
+    let creditCardMasked = "";
+    creditCardListNumbers.forEach((c, index) => {
+      if (index > 15)
+        return;
+      if (index == 4)
+        return creditCardMasked = `${creditCardMasked} ${c}`;
+      if (index == 8)
+        return creditCardMasked = `${creditCardMasked} ${c}`;
+      if (index == 12)
+        return creditCardMasked = `${creditCardMasked} ${c}`;
+      creditCardMasked = `${creditCardMasked}${c}`;
+    });
+    return creditCardMasked;
   }
-  if (cepString.length > 5) {
-    cepString = cepString.slice(0, 5) + "-" + cepString.slice(5);
+  return creditCardParsed;
+};
+var maskCreditCardCvv = (data) => {
+  const creditCardCvvParsed = data.replace(/[^\d,]|,/g, "");
+  if (creditCardCvvParsed.length > 2) {
+    const creditCardCvvListNumbers = creditCardCvvParsed.split("");
+    let creditCardCvvMasked = "";
+    creditCardCvvListNumbers.forEach((c, index) => {
+      if (index > 3)
+        return;
+      if (index == 2)
+        return creditCardCvvMasked = `${creditCardCvvMasked}/${c}`;
+      creditCardCvvMasked = `${creditCardCvvMasked}${c}`;
+    });
+    return creditCardCvvMasked;
   }
-  return cepString;
+  return creditCardCvvParsed;
+};
+var src_default = {
+  Cpf,
+  Money,
+  Cep,
+  Phone,
+  CNPJ,
+  Number,
+  CpfCNPJ,
+  RG,
+  CreditCardNumber,
+  maskCreditCardCvv
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  maskCep,
-  maskCnpj,
-  maskCpf,
-  maskCurrency,
-  maskDate,
-  maskNumber,
-  maskPhone
+  CNPJ,
+  Cep,
+  Cpf,
+  CpfCNPJ,
+  CreditCardNumber,
+  Money,
+  Numbers,
+  Phone,
+  RG,
+  maskCreditCardCvv
 });
