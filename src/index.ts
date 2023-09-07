@@ -198,7 +198,7 @@ export const CreditCardNumber = (data: string) => {
 
     return creditCardParsed
   }
-export const CreditCardCvv = (data: string) => {
+export const CreditCardDate = (data: string) => {
     const creditCardCvvParsed = data.replace(/[^\d,]|,/g, "")
 
     if (creditCardCvvParsed.length > 2) {
@@ -228,5 +228,5 @@ export default {
   CpfCNPJ,
   RG,
   CreditCardNumber,
-  CreditCardCvv
+  CreditCardDate
 }
