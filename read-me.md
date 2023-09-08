@@ -6,7 +6,7 @@ Uma biblioteca JavaScript/TypeScript que fornece máscaras de formatação para 
 
 # Demo
 
-- <a href="https://lucas-marquisio.github.io/lib-masks/" style="color: #00ff; text-decoration: underline;"> 
+- <a href="https://lucas-marquisio.github.io/biblioteca-mascaras/" style="color: #00ff; text-decoration: underline;"> 
   Testar Mascaras
 </a>
 
