@@ -1,7 +1,8 @@
-examples/
+website/
 src/
 .gitignore
 .package-*
 pnpm-lock-yaml
 tsconfig.json
 tsup.config.js
+docs/
