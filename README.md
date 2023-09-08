@@ -2,16 +2,26 @@
 
 Uma biblioteca JavaScript/TypeScript que fornece máscaras de formatação para diversos formatos.
 
-![Demonstração](./src/gif/demonstration.gif)
+![Demonstração](./masks.gif)
+
+# Demo
+
+- <a href="https://lucas-marquisio.github.io/lib-masks/" style="color: #00ff; text-decoration: underline;"> 
+  Testar Mascaras
+</a>
+
+- <a href="https://www.npmjs.com/package/biblioteca-mascaras" style="color: #00ff; text-decoration: underline;">NPM</a>
 
 ## Máscaras suportadas
 - CPF
-- Números
-- Real
-- Data
-- CNPJ
+- Números 
+- Moeda R$
 - CEP
-- Telefone
+- CNPJ
+- Telefone/Celular
+- CPFCNPJ (automatico)
+- RG
+- Cartão de credito & Data de validade
 
 ## Instalação
 
@@ -26,26 +36,35 @@ npm install biblioteca-mascaras@latest
 Importe a biblioteca e utilize as funções de máscaras disponíveis:
 
 ```javascript
-import mascaras from 'biblioteca-mascaras'
+import mask from 'biblioteca-mascaras'
 
-mascaras.maskNumber('1000')
-// output: 1k
+mask.Cpf('00000000000')
+// output: 000.000.000-00
 
-mascaras.maskDate('01012023')
-// output: 01/01/2023
+mask.Money('1')
+// output: R$ 0,01
 
-mascaras.maskCnpj('000000000000000')
+mask.CNPJ('000000000000000')
 // output: 00.000.000/0000-00
 
-mascaras.maskPhone('55111111111')
-// output: (55) 11111-1111
+mask.Phone('55111111111')
+// output: (55) 1 1111-1111
 
-mascaras.maskCep('00000000')
+mask.Cep('00000000')
 // output: 00000-000
 
-mascaras.maskCurrency('33')
-// output: R$ 33,00
+mask.RG('3333333333')
+// output: 33.333.333-33
 
-mascaras.maskCpf('00000000000')
-// output: 000.000.000-00
+mask.Numbers('100000')
+// output: 100.000
+
+mask.CpfCNPJ('00000000000')
+// output: detect if cpf or cnpj
+
+mask.CreditCardNumber('0000000000000000')
+// output: 0000 0000 0000 0000
+
+mask.CreditCardDate('100000')
+// output: 00/00
 ```
