@@ -1,224 +1,289 @@
 export const Cpf = (value: string): string => {
-  const Numbers = value.replace(/[^0-9]/g, "").split("");
-  const totalNumbers = Numbers.length + 1;
-  let numbersList = Numbers;
+  const Numbers = value.replace(/[^0-9]/g, '').split('')
+  const totalNumbers = Numbers.length + 1
+  let numbersList = Numbers
 
   if (totalNumbers > 11) {
-    numbersList = [];
+    numbersList = []
     Numbers.map((e, index) => {
       if (index < 11) {
-        numbersList.push(e);
+        numbersList.push(e)
       }
-    });
+    })
   }
 
-  let cpf = value;
+  let cpf = value
 
   if (totalNumbers > 3) {
-    cpf = "";
+    cpf = ''
     numbersList.map((n: string, index) => {
-      const position = index + 1;
+      const position = index + 1
       if (position == 4 || position == 7) {
-        cpf = cpf + `.${n}`;
-        return;
+        cpf = cpf + `.${n}`
+        return
       }
 
       if (position == 10) {
-        cpf = cpf + `-${n}`;
-        return;
+        cpf = cpf + `-${n}`
+        return
       }
 
-      cpf = cpf + n;
-    });
+      cpf = cpf + n
+    })
   }
-  return cpf;
-};
+  return cpf
+}
 
 export const Money = (value: string) => {
-  const valueParse = value.toString();
+  const valueParse = value.toString()
 
-  if (valueParse.length == 0)
-    return `R$ 0,00`
+  if (valueParse.length == 0) return `R$ 0,00`
 
   if (valueParse.length == 1)
-    return `R$ 0,0${/[^\d,]/g.test(valueParse) ? 0 : valueParse}`;
+    return `R$ 0,0${/[^\d,]/g.test(valueParse) ? 0 : valueParse}`
 
-  const removeCharacters = value.replace(/[^\d,]/g, "");
-  const [money, cents] = removeCharacters.split(",");
+  const removeCharacters = value.replace(/[^\d,]/g, '')
+  const [money, cents] = removeCharacters.split(',')
 
   const moneyUpdated = {
-    money: money || "0",
-    cents: cents || "00",
-  };
+    money: money || '0',
+    cents: cents || '00'
+  }
 
   if (cents.length == 3) {
-    moneyUpdated.money = money == "0" ? cents[0] : `${money}${cents[0]}`;
-    moneyUpdated.cents = cents.slice(1);
-  } else if (cents.length == 1 && money != "0") {
-    const valueToSetCent = money[money.length - 1];
-    moneyUpdated.cents = `${valueToSetCent}${cents}`;
+    moneyUpdated.money = money == '0' ? cents[0] : `${money}${cents[0]}`
+    moneyUpdated.cents = cents.slice(1)
+  } else if (cents.length == 1 && money != '0') {
+    const valueToSetCent = money[money.length - 1]
+    moneyUpdated.cents = `${valueToSetCent}${cents}`
     moneyUpdated.money =
-      money.slice(0, money.length - 1) == ""
-        ? "0"
-        : money.slice(0, money.length - 1);
+      money.slice(0, money.length - 1) == ''
+        ? '0'
+        : money.slice(0, money.length - 1)
   } else if (money.length < 2 && cents.length > 2 && cents.length < 4) {
-    moneyUpdated.cents = cents.slice(1);
-    moneyUpdated.money = money;
+    moneyUpdated.cents = cents.slice(1)
+    moneyUpdated.money = money
   }
 
-  return `R$ ${parseInt(moneyUpdated.money).toLocaleString("pt-BR")},${
-    moneyUpdated.cents == "0" ? "00" : moneyUpdated.cents
-  }`;
-};
+  return `R$ ${parseInt(moneyUpdated.money).toLocaleString('pt-BR')},${
+    moneyUpdated.cents == '0' ? '00' : moneyUpdated.cents
+  }`
+}
 
 export const Cep = (data: string) => {
-  const dataOnlyNumbers = data.replace(/[^\d,]|,/g, "");
-  let cepParse = "";
+  const dataOnlyNumbers = data.replace(/[^\d,]|,/g, '')
+  let cepParse = ''
 
   if (dataOnlyNumbers.length > 5) {
-    dataOnlyNumbers.split("").forEach((d, index) => {
-      if (index > 7) return;
+    dataOnlyNumbers.split('').forEach((d, index) => {
+      if (index > 7) return
       if (index == 5) {
-        cepParse = `${cepParse}-${d}`;
-        return;
+        cepParse = `${cepParse}-${d}`
+        return
       }
-      cepParse = `${cepParse}${d}`;
-    });
-    return cepParse;
+      cepParse = `${cepParse}${d}`
+    })
+    return cepParse
   }
-  return dataOnlyNumbers;
-};
+  return dataOnlyNumbers
+}
 
 export const Phone = (data: string) => {
-  const phoneNumber = data.replace(/[^\d,]|,/g, "");
+  const phoneNumber = data.replace(/[^\d,]|,/g, '')
 
   if (phoneNumber.length > 2) {
-    let phoneMask = "";
+    let phoneMask = ''
 
-    const phoneNumberArray = phoneNumber.split("");
+    const phoneNumberArray = phoneNumber.split('')
 
     phoneNumberArray.forEach((p, index) => {
-      if (index == 0) return (phoneMask = `(${p}`);
-      if (index == 1) return (phoneMask = `${phoneMask}${p})`);
-      if (index == 2) return (phoneMask = `${phoneMask} ${p}`);
-      if (index == 3) return (phoneMask = `${phoneMask} ${p}`);
-      if (index == 7) return (phoneMask = `${phoneMask}-${p}`);
-      if (index == 10) return (phoneMask = `${phoneMask}${p}`);
+      if (index == 0) return (phoneMask = `(${p}`)
+      if (index == 1) return (phoneMask = `${phoneMask}${p})`)
+      if (index == 2) return (phoneMask = `${phoneMask} ${p}`)
+      if (index == 3) return (phoneMask = `${phoneMask} ${p}`)
+      if (index == 7) return (phoneMask = `${phoneMask}-${p}`)
+      if (index == 10) return (phoneMask = `${phoneMask}${p}`)
 
-      if (index > 10) return;
+      if (index > 10) return
 
-      phoneMask = `${phoneMask}${p}`;
-    });
+      phoneMask = `${phoneMask}${p}`
+    })
 
-    return phoneMask;
+    return phoneMask
   }
 
-  return phoneNumber;
-};
+  return phoneNumber
+}
 
 export const CNPJ = (data: string) => {
-  const cnpjNumber = data.replace(/[^\d,]|,/g, "");
+  const cnpjNumber = data.replace(/[^\d,]|,/g, '')
 
   if (cnpjNumber.length > 2) {
-    const cnpjNumberArray = cnpjNumber.split("");
-    let maskCNPJ = "";
+    const cnpjNumberArray = cnpjNumber.split('')
+    let maskCNPJ = ''
 
     cnpjNumberArray.forEach((c, index) => {
-      if (index == 2) return (maskCNPJ = `${maskCNPJ}.${c}`);
-      if (index == 5) return (maskCNPJ = `${maskCNPJ}.${c}`);
-      if (index == 8) return (maskCNPJ = `${maskCNPJ}/${c}`);
-      if (index == 12) return (maskCNPJ = `${maskCNPJ}-${c}`);
-      if (index >= 14) return;
+      if (index == 2) return (maskCNPJ = `${maskCNPJ}.${c}`)
+      if (index == 5) return (maskCNPJ = `${maskCNPJ}.${c}`)
+      if (index == 8) return (maskCNPJ = `${maskCNPJ}/${c}`)
+      if (index == 12) return (maskCNPJ = `${maskCNPJ}-${c}`)
+      if (index >= 14) return
 
-      return (maskCNPJ = `${maskCNPJ}${c}`);
-    });
+      return (maskCNPJ = `${maskCNPJ}${c}`)
+    })
 
-    return maskCNPJ;
+    return maskCNPJ
   }
 
-  return cnpjNumber;
-};
+  return cnpjNumber
+}
 
 export const Numbers = (data: string) => {
-  const number = data.replace(/[^\d,]|,/g, "");
+  const number = data.replace(/[^\d,]|,/g, '')
 
-  const numberMasked = parseInt(number).toLocaleString();
+  const numberMasked = parseInt(number).toLocaleString()
 
-  return isNaN(parseInt(numberMasked)) ? "0" : numberMasked;
-};
+  return isNaN(parseInt(numberMasked)) ? '0' : numberMasked
+}
 
-export  const CpfCNPJ = (data: string) => {
-    const dataParse = data.replace(/[^\d,]|,/g, "")
+export const CpfCNPJ = (data: string) => {
+  const dataParse = data.replace(/[^\d,]|,/g, '')
 
-    if (dataParse.length < 12) return Cpf(dataParse)
+  if (dataParse.length < 12) return Cpf(dataParse)
 
-    return CNPJ(dataParse)
-  }
+  return CNPJ(dataParse)
+}
 
 export const RG = (data: string) => {
-    const rgParse = data.replace(/[^\d,]|,/g, "")
+  const rgParse = data.replace(/[^\d,]|,/g, '')
 
-    if (rgParse.length > 2) {
-      const rgNumberList = rgParse.split('')
-      let rgMasked = ''
+  if (rgParse.length > 2) {
+    const rgNumberList = rgParse.split('')
+    let rgMasked = ''
 
-      rgNumberList.forEach((r, index) => {
-        if(index == 2) return rgMasked = `${rgMasked}.${r}`
-        if(index == 5) return rgMasked = `${rgMasked}.${r}`
-        if(index == 8) return rgMasked = `${rgMasked}-${r}`
-        if(index > 9) return
+    rgNumberList.forEach((r, index) => {
+      if (index == 2) return (rgMasked = `${rgMasked}.${r}`)
+      if (index == 5) return (rgMasked = `${rgMasked}.${r}`)
+      if (index == 8) return (rgMasked = `${rgMasked}-${r}`)
+      if (index > 9) return
 
-        return rgMasked = `${rgMasked}${r}`
-      })
+      return (rgMasked = `${rgMasked}${r}`)
+    })
 
-      return rgMasked
-    }
-
-    return rgParse
+    return rgMasked
   }
+
+  return rgParse
+}
 
 export const CreditCardNumber = (data: string) => {
-    const creditCardParsed = data.replace(/[^\d,]|,/g, "")
+  const creditCardParsed = data.replace(/[^\d,]|,/g, '')
 
-    if (creditCardParsed.length > 4) {
-      const creditCardListNumbers = creditCardParsed.split('')
-      let creditCardMasked = ''
+  if (creditCardParsed.length > 4) {
+    const creditCardListNumbers = creditCardParsed.split('')
+    let creditCardMasked = ''
 
-      creditCardListNumbers.forEach((c, index) => {
-        if (index > 15) return
-        if(index == 4) return creditCardMasked = `${creditCardMasked} ${c}` 
-        if(index == 8) return creditCardMasked = `${creditCardMasked} ${c}` 
-        if(index == 12) return creditCardMasked = `${creditCardMasked} ${c}` 
+    creditCardListNumbers.forEach((c, index) => {
+      if (index > 15) return
+      if (index == 4) return (creditCardMasked = `${creditCardMasked} ${c}`)
+      if (index == 8) return (creditCardMasked = `${creditCardMasked} ${c}`)
+      if (index == 12) return (creditCardMasked = `${creditCardMasked} ${c}`)
 
-        creditCardMasked = `${creditCardMasked}${c}`
-      })
+      creditCardMasked = `${creditCardMasked}${c}`
+    })
 
-      return creditCardMasked
-    }
-
-    return creditCardParsed
+    return creditCardMasked
   }
+
+  return creditCardParsed
+}
 export const CreditCardDate = (data: string) => {
-    const creditCardCvvParsed = data.replace(/[^\d,]|,/g, "")
+  const creditCardCvvParsed = data.replace(/[^\d,]|,/g, '')
 
-    if (creditCardCvvParsed.length > 2) {
-      const creditCardCvvListNumbers = creditCardCvvParsed.split('')
-      let creditCardCvvMasked = ''
+  if (creditCardCvvParsed.length > 2) {
+    const creditCardCvvListNumbers = creditCardCvvParsed.split('')
+    let creditCardCvvMasked = ''
 
-      creditCardCvvListNumbers.forEach((c, index) => {
-        if (index > 3) return
-        if(index == 2) return creditCardCvvMasked = `${creditCardCvvMasked}/${c}` 
-        creditCardCvvMasked = `${creditCardCvvMasked}${c}`
-      })
+    creditCardCvvListNumbers.forEach((c, index) => {
+      if (index > 3) return
+      if (index == 2)
+        return (creditCardCvvMasked = `${creditCardCvvMasked}/${c}`)
+      creditCardCvvMasked = `${creditCardCvvMasked}${c}`
+    })
 
-      return creditCardCvvMasked
-    }
-
-    return creditCardCvvParsed
-
+    return creditCardCvvMasked
   }
+
+  return creditCardCvvParsed
+}
+
+export const DateFormat = (data: string) => {
+  const dateParse = data.replace(/[^\d,]|,/g, '')
+  let dateParseUpdated = ''
+
+  if (dateParse.length > 2) {
+    const dateParseSplit = dateParse.split('')
+    dateParseSplit.forEach((dt, index) => {
+      if (index === 2 && parseInt(dateParseUpdated) > 31) {
+        dateParseUpdated = '31'
+      }
+      if (index === 2) {
+        dateParseUpdated += `/${dt}`
+        return
+      }
+      if (
+        index === 4 &&
+        parseInt(`${dateParseSplit[2]}${dateParseSplit[3]}`) > 12
+      ) {
+        const removeLasts = dateParseUpdated.substring(
+          0,
+          dateParseUpdated.length - 2
+        )
+        dateParseUpdated = `${removeLasts}12`
+      }
+      if (index === 4) {
+        dateParseUpdated += `/${dt}`
+        return
+      }
+      dateParseUpdated += dt
+    })
+  } else {
+    dateParseUpdated = dateParse
+  }
+
+  return dateParseUpdated.substring(0, 10)
+}
+
+export const PhoneSimple = (data: string) => {
+  const phoneNumber = data.replace(/[^\d,]|,/g, '')
+
+  if (phoneNumber.length > 2) {
+    let phoneMask = ''
+
+    const phoneNumberArray = phoneNumber.split('')
+
+    phoneNumberArray.forEach((p, index) => {
+      if (index == 0) return (phoneMask = `(${p}`)
+      if (index == 1) return (phoneMask = `${phoneMask}${p})`)
+      if (index == 2) return (phoneMask = `${phoneMask} ${p}`)
+      if (index == 6) return (phoneMask = `${phoneMask}-${p}`)
+      if (index == 10) return (phoneMask = `${phoneMask}`)
+
+      if (index > 10) return
+
+      phoneMask = `${phoneMask}${p}`
+
+    })
+
+    return phoneMask
+  }
+
+  return phoneNumber
+}
 
 export default {
+  PhoneSimple,
+  DateFormat,
   Cpf,
   Money,
   Cep,

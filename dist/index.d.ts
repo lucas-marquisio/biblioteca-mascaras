@@ -8,7 +8,11 @@ declare const CpfCNPJ: (data: string) => string;
 declare const RG: (data: string) => string;
 declare const CreditCardNumber: (data: string) => string;
 declare const CreditCardDate: (data: string) => string;
+declare const DateFormat: (data: string) => string;
+declare const PhoneSimple: (data: string) => string;
 declare const _default: {
+    PhoneSimple: (data: string) => string;
+    DateFormat: (data: string) => string;
     Cpf: (value: string) => string;
     Money: (value: string) => string;
     Cep: (data: string) => string;
@@ -21,4 +25,4 @@ declare const _default: {
     CreditCardDate: (data: string) => string;
 };
 
-export { CNPJ, Cep, Cpf, CpfCNPJ, CreditCardDate, CreditCardNumber, Money, Numbers, Phone, RG, _default as default };
+export { CNPJ, Cep, Cpf, CpfCNPJ, CreditCardDate, CreditCardNumber, DateFormat, Money, Numbers, Phone, PhoneSimple, RG, _default as default };
