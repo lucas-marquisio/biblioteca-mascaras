@@ -1,5 +1,4 @@
 import masks from 'biblioteca-mascaras'
-import masksTest from '../../src/index.js'
 import './App.css'
 import { ApplyMask } from './ApplyMask'
 
@@ -56,7 +55,7 @@ function App () {
         title='Numero Celular'
       />
       <ApplyMask
-        mask={masksTest.PhoneSimple}
+        mask={masks.PhoneSimple}
         placeholder='(55) 3333-3333'
         title='Telefone'
       />
@@ -67,7 +66,7 @@ function App () {
       />
       <ApplyMask mask={masks.Cep} placeholder='00000-000' title='CEP' />
       <ApplyMask
-        mask={masksTest.DateFormat}
+        mask={masks.DateFormat}
         placeholder='00/00/0000'
         title='DATA'
       />
