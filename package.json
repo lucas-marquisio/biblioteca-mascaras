@@ -1,6 +1,6 @@
 {
   "name": "biblioteca-mascaras",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "biblioteca de mascaras para javascript/typescript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
