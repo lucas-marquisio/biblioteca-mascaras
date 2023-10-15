@@ -13,12 +13,15 @@ Uma biblioteca JavaScript/TypeScript que fornece máscaras de formatação para 
 - <a href="https://www.npmjs.com/package/biblioteca-mascaras" style="color: #00ff; text-decoration: underline;">NPM</a>
 
 ## Máscaras suportadas
+
 - CPF
-- Números 
+- Números
 - Moeda R$
 - CEP
 - CNPJ
-- Telefone/Celular
+- Celular
+- Telefone
+- Data
 - CPFCNPJ (automatico)
 - RG
 - Cartão de credito & Data de validade
@@ -49,6 +52,12 @@ mask.CNPJ('000000000000000')
 
 mask.Phone('55111111111')
 // output: (55) 1 1111-1111
+
+mask.PhoneSimple('3333333333')
+// output: (33) 3333-3333
+
+mask.DateFormat('121223')
+// output: 12/12/23
 
 mask.Cep('00000000')
 // output: 00000-000
