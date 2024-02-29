@@ -1,6 +1,6 @@
 # Biblioteca de Máscaras
 
-Uma biblioteca JavaScript/TypeScript que fornece máscaras de formatação para diversos formatos.
+#### Uma biblioteca JavaScript/TypeScript que fornece máscaras de formatação para diversos formatos.
 
 ![Demonstração](./masks.gif)
 
